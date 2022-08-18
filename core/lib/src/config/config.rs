@@ -172,7 +172,9 @@ impl Config {
             workers: num_cpus::get(),
             ident: Ident::default(),
             limits: Limits::default(),
-            temp_dir: std::env::temp_dir().into(),
+            temp_dir: std::env::var_os("TMPDIR")
+                .expect("$TMPDIR is not set")
+                .into(),
             keep_alive: 5,
             #[cfg(feature = "tls")]
             tls: None,
